@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+        application:
+                hostname: php_development_docker
+                build: ./.docker/application/
+                # Image name
+                image: php_development_docker
+                # Volume mapping
+                volumes:
+                        - ./:/var/www/html/
+                        # Mapping the log volume
+                        - /var/log/apache2/php_development_docker/:/var/log/apache2/
+                ports:
+                        - 8080:80
+                        - 1443:443
+                links:
+                        - database
+        database:
+                build: ./.docker/database/
+                volumes:
+                        - /var/lib/mysql/php_development_docker/:/var/lib/mysql/
+                ports:
+                        - 13306:3306
